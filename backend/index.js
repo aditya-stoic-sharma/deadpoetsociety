@@ -1,11 +1,26 @@
+const connectToMongo = require('./dbConnection');
+connectToMongo(); // this line will connect the database mongodb with bckend
+var cors = require('cors')
 const express = require('express');
 const app = express();
 const port = 5000;
-
-// Define a route
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.use(express.json())
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
 });
+app.use(cors());
+
+// Defining routes for authentication 
+app.use('/api/auth', require('./routes/auth'))
+app.use('/api/book', require('./routes/book'))
+app.use('/api/poetry', require('./routes/poetry'));
+
+
+app.get('/', (req, res) => {
+    res.send('hello aditya')
+})
+
 
 // Start the server
 app.listen(port, () => {
