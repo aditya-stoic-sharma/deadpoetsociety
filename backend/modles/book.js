@@ -14,7 +14,8 @@ const reviewSchema = new Schema({
         type: Number,
         min: 1,
         max: 5
-    }
+    },
+
 });
 
 const bookSchema = new Schema({
@@ -49,12 +50,27 @@ const bookSchema = new Schema({
         ref: 'user',
         required: true
     },
+    userName: {
+        type: String // Add a field to store the username
+    },
 
     reviews: [reviewSchema],
 
 });
 
+bookSchema.pre('find', function (next) {
+    this.populate('user', 'name'); // Populate the 'user' field with 'name' only
+    next();
+});
 
+// Post-processing to set the userName field based on the populated user field
+bookSchema.post('find', function (books) {
+    books.forEach(book => {
+        if (book.user && book.user.name) {
+            book.userName = book.user.name;
+        }
+    });
+});
 
 
 
