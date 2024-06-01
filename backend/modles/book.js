@@ -6,13 +6,16 @@ const reviewSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    userName: {
+        type: String,
+    },
     comment: {
         type: String,
         required: true
     },
     rating: {
         type: Number,
-        min: 1,
+        min: 0,
         max: 5
     },
 
