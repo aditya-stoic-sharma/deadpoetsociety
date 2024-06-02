@@ -17,7 +17,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "both": "concurrently \"npm run start\" \"nodemon backend/index.js\""
+    "backend": "nodemon backend/index.js",
+    "frontend": "cd frontend/dead_poet_society_fe && npm run start",
+    "both": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "eslintConfig": {
     "extends": [
